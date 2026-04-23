@@ -11,6 +11,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import specialtyRoutes from './routes/specialtyRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
+import { getSettings } from './controllers/settingsController.js';
 
 dotenv.config();
 
@@ -19,8 +20,8 @@ const app = express();
 // Security Middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
-  credentials: true
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    credentials: true
 }));
 
 // Body Parser Middleware
@@ -32,8 +33,11 @@ connectDB();
 
 // Health Check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'API is running' });
+    res.json({ status: 'API is running' });
 });
+
+// Public Settings Route
+app.get('/api/settings', getSettings);
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -47,20 +51,20 @@ app.use('/api/notifications', notificationRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || 'Internal Server Error',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
-  });
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || 'Internal Server Error',
+        ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    });
 });
 
 // 404 Handler
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: 'Route not found' });
+    res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

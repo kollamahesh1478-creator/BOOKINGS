@@ -11,6 +11,7 @@ import {
     getPaymentReports,
     sendNotification
 } from '../controllers/adminController.js';
+import { getSettings, updateSettings } from '../controllers/settingsController.js';
 import { authMiddleware, authorize } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -29,6 +30,10 @@ router.post('/doctors', authMiddleware, authorize('admin', 'superadmin'), create
 router.get('/specialties', authMiddleware, authorize('admin', 'superadmin'), manageSpecialties);
 router.post('/specialties', authMiddleware, authorize('admin', 'superadmin'), createSpecialty);
 router.put('/specialties/:id', authMiddleware, authorize('admin', 'superadmin'), updateSpecialty);
+
+// Settings
+router.get('/settings', authMiddleware, authorize('admin', 'superadmin'), getSettings);
+router.put('/settings', authMiddleware, authorize('admin', 'superadmin'), updateSettings);
 
 // Reports
 router.get('/reports/appointments', authMiddleware, authorize('admin', 'superadmin'), getAppointmentReports);

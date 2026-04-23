@@ -19,6 +19,7 @@ import ManageDoctors from './pages/Admin/ManageDoctors';
 import ManageAppointments from './pages/Admin/ManageAppointments';
 import PaymentReports from './pages/Admin/PaymentReports';
 import ManageSpecialties from './pages/Admin/ManageSpecialties';
+import ManageSettings from './pages/Admin/ManageSettings';
 
 // Public Pages
 import Home from './pages/Home';
